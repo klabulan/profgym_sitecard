@@ -1,0 +1,138 @@
+/* Header & Navigation */
+header {
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0.6rem 0;
+    transition: all var(--transition-medium);
+}
+
+header.scrolled {
+    padding: 0.4rem 0;
+    box-shadow: var(--shadow-lg);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    font-weight: normal;
+    color: var(--primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color var(--transition-medium);
+}
+
+.logo-image {
+    max-height: 35px;
+    width: auto;
+    margin-right: var(--space-sm);
+}
+
+.logo:hover {
+    color: var(--primary);
+}
+
+/* Navigation */
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    gap: var(--space-sm);
+}
+
+nav ul li {
+    margin-bottom: 0;
+}
+
+nav ul li a {
+    color: var(--text-dark);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    padding: 0.3rem var(--space-xs);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-medium);
+    position: relative;
+    letter-spacing: 1px;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--primary);
+    transition: all var(--transition-medium);
+    transform: translateX(-50%);
+}
+
+nav ul li a:hover {
+    color: var(--primary);
+}
+
+nav ul li a:hover::after {
+    width: 70%;
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary);
+    padding: var(--space-sm);
+    z-index: 1001;
+}
+
+@media (max-width: 992px) {
+    .menu-toggle {
+        display: block;
+    }
+    
+    nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: var(--white);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 80px var(--space-lg) var(--space-lg);
+        transition: right var(--transition-medium);
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        gap: var(--space-lg);
+    }
+    
+    nav ul.show {
+        right: 0;
+    }
+    
+    nav ul li {
+        width: 100%;
+    }
+    
+    nav ul li a {
+        display: block;
+        width: 100%;
+        padding: var(--space-sm) 0;
+    }
+}

@@ -1,0 +1,98 @@
+/* Main CSS File - Imports all CSS components */
+
+/* Import CSS Variables */
+@import 'variables.css';
+
+/* Import Reset & Basic Styles */
+@import 'reset.css';
+
+/* Import Typography - Identyca Styles */
+@import 'typography.css';
+
+/* Import Layout Styles */
+@import 'layout.css';
+
+/* Import Components */
+@import 'components.css';
+
+/* Import Header & Navigation */
+@import 'header.css';
+
+/* Import Hero Section */
+@import 'hero.css';
+
+/* Import Pain Carousel */
+@import 'pain-carousel.css';
+
+/* Import Content Sections */
+@import 'sections.css';
+
+/* Import Footer */
+@import 'footer.css';
+
+/* Animation Script Hook - Add this to the bottom of your HTML body */
+/*
+<script>
+// Intersection Observer for section animations
+const sections = document.querySelectorAll('.content-section');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Optional: Unobserve after animation
+      // observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1 // Trigger when 10% of the section is visible
+});
+
+sections.forEach(section => {
+  observer.observe(section);
+});
+
+// Scroll-to-top button functionality
+const scrollToTopButton = document.getElementById('scroll-to-top');
+
+if (scrollToTopButton) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      scrollToTopButton.classList.add('visible');
+    } else {
+      scrollToTopButton.classList.remove('visible');
+    }
+  });
+
+  scrollToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+// Header scroll effect
+const header = document.querySelector('header');
+
+if (header) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+}
+
+// Mobile menu toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav ul');
+
+if (menuToggle && nav) {
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('show');
+  });
+}
+</script>
+*/

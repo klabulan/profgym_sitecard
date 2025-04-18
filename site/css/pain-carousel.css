@@ -1,0 +1,186 @@
+/* Pain Carousel - Similar to Hero Carousel but adapted for the Problem Section */
+.pain-carousel {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    position: relative;
+    z-index: 3;
+    max-width: 100%;
+    height: 320px;
+}
+
+.pain-carousel .carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.pain-carousel .carousel-slide {
+    position: absolute;
+    width: 25%;
+    height: 80%;
+    transition: all 0.5s ease;
+    opacity: 0.7;
+    filter: blur(2px);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transform: scale(0.85);
+    border: 2px solid rgba(255, 110, 31, 0.2);
+}
+
+.pain-carousel .carousel-slide.prev,
+.pain-carousel .carousel-slide.next {
+    z-index: 1;
+}
+
+.pain-carousel .carousel-slide.prev {
+    left: 15%;
+}
+
+.pain-carousel .carousel-slide.next {
+    right: 15%;
+}
+
+.pain-carousel .carousel-slide.active {
+    opacity: 1;
+    filter: blur(0);
+    z-index: 2;
+    transform: scale(1);
+    width: 35%;
+    height: 100%;
+    border: 3px solid var(--primary);
+    box-shadow: var(--shadow-xl);
+}
+
+.pain-carousel .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.pain-carousel .carousel-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.pain-carousel .carousel-control {
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+    color: var(--primary);
+}
+
+.pain-carousel .carousel-control:hover {
+    background: white;
+}
+
+.pain-carousel .carousel-indicators {
+    display: flex;
+    gap: 8px;
+}
+
+.pain-carousel .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.pain-carousel .indicator.active {
+    background: var(--primary);
+}
+
+@media (max-width: 992px) {
+    .pain-carousel {
+        height: 300px;
+    }
+    
+    .pain-carousel .carousel-slide.active {
+        width: 45%;
+    }
+    
+    .pain-carousel .carousel-slide.prev {
+        left: 10%;
+    }
+    
+    .pain-carousel .carousel-slide.next {
+        right: 10%;
+    }
+}
+
+@media (max-width: 768px) {
+    .pain-carousel {
+        height: 260px;
+        margin-bottom: -10px;
+    }
+    
+    .pain-carousel .carousel-slide.active {
+        width: 60%;
+    }
+    
+    .pain-carousel .carousel-slide.prev,
+    .pain-carousel .carousel-slide.next {
+        width: 30%;
+    }
+    
+    .pain-carousel .carousel-slide.prev {
+        left: 5%;
+    }
+    
+    .pain-carousel .carousel-slide.next {
+        right: 5%;
+    }
+}
+
+@media (max-width: 576px) {
+    .pain-carousel {
+        height: 200px;
+    }
+    
+    .pain-carousel .carousel-slide.active {
+        width: 70%;
+    }
+    
+    .pain-carousel .carousel-slide.prev,
+    .pain-carousel .carousel-slide.next {
+        opacity: 0.4;
+        width: 25%;
+    }
+    
+    .pain-carousel .carousel-controls {
+        bottom: 10px;
+    }
+    
+    .pain-carousel .carousel-control {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .pain-carousel .indicator {
+        width: 8px;
+        height: 8px;
+    }
+}

@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ресурс-концепт | Профессиональная гимнастика для бизнеса</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="../assets/logo.png" type="image/png">
 </head>
 <body>
 
     <header>
         <nav>
             <div class="container">
-                <div class="logo">Ресурс-концепт</div>
+                <div class="logo">
+                    <img src="../assets/logo.png" alt="Ресурс-концепт" class="logo-image">
+                </div>
                 <button class="menu-toggle" aria-label="Открыть меню">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -35,8 +38,21 @@
             <h1>Здоровье сотрудников – ключевой актив вашего бизнеса</h1>
             <p class="subtitle">Превратите заботу о команде в мощное конкурентное преимущество. Мы создаем не просто фитнес-программы, а целую экосистему здоровья, которая напрямую влияет на продуктивность, вовлеченность и лояльность ваших сотрудников.</p>
                 <a href="#contact" class="cta-button">Рассчитать эффект для вашей компании</a>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80" alt="Сотрудники выполняют упражнения на рабочем месте">
+                <div class="hero-carousel">
+                    <div class="carousel-container">
+                        <!-- Images will be loaded dynamically from folder -->
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control prev" aria-label="Предыдущий слайд">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="carousel-indicators">
+                            <!-- Indicators will be added dynamically -->
+                        </div>
+                        <button class="carousel-control next" aria-label="Следующий слайд">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -58,7 +74,22 @@
                         <p>Выгорание, снижение лояльности и текучесть ценных кадров часто начинаются там, где пренебрегают здоровьем. Забота о команде – ключевой фактор удержания талантов и сильного HR-бренда.</p>
                     </div>
                 </div>
-                 <div class="visual-placeholder">[Визуальный элемент: Анонимные цитаты/кейсы о влиянии проблем со здоровьем]</div>
+                <div class="pain-carousel">
+                    <div class="carousel-container">
+                        <!-- Images will be loaded dynamically from pain-images.js -->
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control prev" aria-label="Предыдущий слайд">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="carousel-indicators">
+                            <!-- Indicators will be added dynamically -->
+                        </div>
+                        <button class="carousel-control next" aria-label="Следующий слайд">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -309,7 +340,10 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="footer-logo">Ресурс-концепт</div>
+                    <div class="footer-logo">
+                        <img src="../assets/logo.png" alt="Ресурс-концепт" class="logo-image">
+                        <span>Ресурс-концепт</span>
+                    </div>
                     <p>Экосистема здоровья для вашего бизнеса</p>
                 </div>
                 <div class="footer-links">
@@ -364,9 +398,17 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
+    <!-- Image Data -->
+    <script src="js/worker-images.js"></script>
+    <script src="js/pain-images.js"></script>
+    
     <script>
         // Intersection Observer for animations
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize carousels
+            initCarousel('.hero-carousel', WORKER_IMAGES);
+            initCarousel('.pain-carousel', PAIN_IMAGES);
+            
             const sections = document.querySelectorAll('.content-section');
             
             // Exclude hero section if it also has the class
@@ -473,6 +515,127 @@
                 }
             });
         });
+
+        // Generic carousel functionality
+        function initCarousel(carouselSelector, imagesArray) {
+            const carouselContainer = document.querySelector(`${carouselSelector} .carousel-container`);
+            const carouselIndicators = document.querySelector(`${carouselSelector} .carousel-indicators`);
+            const prevButton = document.querySelector(`${carouselSelector} .carousel-control.prev`);
+            const nextButton = document.querySelector(`${carouselSelector} .carousel-control.next`);
+            
+            let currentSlide = 0;
+            let slideInterval;
+            
+            // Create slides from the images array passed as a parameter
+            imagesArray.forEach((image, index) => {
+                // Create slide
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                
+                const img = document.createElement('img');
+                img.src = image.path;
+                img.alt = image.alt;
+                
+                slide.appendChild(img);
+                carouselContainer.appendChild(slide);
+                
+                // Create indicator
+                const indicator = document.createElement('button');
+                indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+                indicator.setAttribute('data-slide', index);
+                indicator.setAttribute('aria-label', `Слайд ${index + 1}`);
+                
+                indicator.addEventListener('click', () => {
+                    const slides = carouselContainer.querySelectorAll('.carousel-slide');
+                    const indicators = carouselIndicators.querySelectorAll('.indicator');
+                    goToSlide(index, slides, indicators);
+                    resetInterval();
+                });
+                
+                carouselIndicators.appendChild(indicator);
+            });
+            
+            // Get all slides and indicators within this carousel
+            const slides = carouselContainer.querySelectorAll('.carousel-slide');
+            const indicators = carouselIndicators.querySelectorAll('.indicator');
+            
+            // Initialize the slides
+            setupSlides(slides, indicators);
+            
+            // Setup controls
+            setupControls(slides, indicators);
+            
+            // Start automatic rotation
+            startInterval();
+            
+            // Functions to control carousel - these will be used after images are fetched
+            function setupSlides(slides, indicators) {
+                // Reset all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active', 'prev', 'next');
+                });
+                
+                const totalSlides = slides.length;
+                
+                // Set active slide
+                slides[currentSlide].classList.add('active');
+                
+                // Set previous slide
+                const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+                slides[prevIndex].classList.add('prev');
+                
+                // Set next slide
+                const nextIndex = (currentSlide + 1) % totalSlides;
+                slides[nextIndex].classList.add('next');
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentSlide);
+                });
+            }
+            
+            function goToSlide(index, slides, indicators) {
+                currentSlide = (index + slides.length) % slides.length;
+                setupSlides(slides, indicators);
+            }
+            
+            function resetInterval() {
+                clearInterval(slideInterval);
+                startInterval();
+            }
+            
+            function startInterval() {
+                slideInterval = setInterval(() => {
+                    const slides = carouselContainer.querySelectorAll('.carousel-slide');
+                    const indicators = carouselIndicators.querySelectorAll('.indicator');
+                    goToSlide(currentSlide + 1, slides, indicators);
+                }, 5000);
+            }
+            
+            // Hook up event listeners for controls after images are loaded
+            function setupControls(slides, indicators) {
+                if (prevButton) {
+                    prevButton.addEventListener('click', () => {
+                        goToSlide(currentSlide - 1, slides, indicators);
+                        resetInterval();
+                    });
+                }
+                
+                if (nextButton) {
+                    nextButton.addEventListener('click', () => {
+                        goToSlide(currentSlide + 1, slides, indicators);
+                        resetInterval();
+                    });
+                }
+                
+                // Pause rotation on hover
+                carouselContainer.addEventListener('mouseenter', () => {
+                    clearInterval(slideInterval);
+                });
+                
+                carouselContainer.addEventListener('mouseleave', startInterval);
+            }
+        }
     </script>
 </body>
 </html>
